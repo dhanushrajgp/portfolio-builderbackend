@@ -12,6 +12,7 @@ app.use(express.urlencoded({extended:false}));
 app.use("/auth",authRouter)
 
 
+
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT,()=>{
