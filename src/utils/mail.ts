@@ -28,10 +28,7 @@ export const sendVerificationEmail=async (token:string,profile:Profile)=>{
     const transport = generateMailTransport()
     const {name,userId,email} = profile;
     const welcomeMessage= `Hi ${name} Welcome to the Portfolio Builder. Now you can build your digital resume easily. use the given OTP to verify your email`
-    await EmailVerificationToken.create({
-        owner:userId,
-        token:token
-    })
+  
     transport.sendMail({
         to:email,
         from:VERIFICATION_EMAIL,
@@ -54,6 +51,43 @@ export const sendVerificationEmail=async (token:string,profile:Profile)=>{
                 filename:"welcome.png",
                 path:path.join(__dirname,"../mail/welcome.png"),
                 cid:"welcome"
+            }
+        ]
+    })
+}
+interface Options{
+email:string;
+link:string;
+}
+
+export const sendForgetPasswordLink=async (options:Options)=>{
+
+    const transport = generateMailTransport()
+    const {email,link} = options;
+    const message = "Use the link given below to change your password."
+  
+    transport.sendMail({
+        to:email,
+        from:VERIFICATION_EMAIL,
+        subject:"Reset Password Link",
+        html:generateTemplate({
+            title:"Forget Password",
+            message,
+            logo:"cid:logo",
+            banner:"cid:forget_password",
+            link,
+            btnTitle:"Reset Password"
+        }),
+        attachments:[
+            {
+                filename:"logo.png",
+                path:path.join(__dirname,"../mail/logo.png"),
+                cid:"logo"
+            },
+            {
+                filename:"forget_password.png",
+                path:path.join(__dirname,"../mail/forget_password.png"),
+                cid:"forget_password"
             }
         ]
     })

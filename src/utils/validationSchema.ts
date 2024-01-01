@@ -10,7 +10,7 @@ export const CreateUserSchema = yup.object().shape(
     }
 )
 
-export const EmailVerificationBody = yup.object().shape(
+export const TokenAndIDValidation = yup.object().shape(
     {
         token:yup.string().trim().required("Invalid Token!"),
         userId:yup.string().transform(function(value){
@@ -21,4 +21,7 @@ export const EmailVerificationBody = yup.object().shape(
         }).required("Invalid UserId!")
     }
 )
+
+
+
 
